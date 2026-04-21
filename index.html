@@ -17,30 +17,20 @@
             background-size: 20px 20px;
             min-height: 100vh;
             font-family: system-ui, -apple-system, sans-serif;
-            transition: background-image 0.5s ease !important;
         }
 
-        /* 动态题目背景 —— 已修复路径 + 强制覆盖 */
-        body.bg-1 {
-            background-image: linear-gradient(rgba(255,255,255,0.85), rgba(255,255,255,0.85)), url('./bg1.jpg') !important;
-            background-size: cover !important;
-            background-position: center !important;
-            background-attachment: fixed !important;
-            background-repeat: no-repeat !important;
-        }
-        body.bg-2 {
-            background-image: linear-gradient(rgba(255,255,255,0.85), rgba(255,255,255,0.85)), url('./bg2.jpg') !important;
-            background-size: cover !important;
-            background-position: center !important;
-            background-attachment: fixed !important;
-            background-repeat: no-repeat !important;
-        }
-        body.bg-3 {
-            background-image: linear-gradient(rgba(255,255,255,0.85), rgba(255,255,255,0.85)), url('./bg3.jpg') !important;
-            background-size: cover !important;
-            background-position: center !important;
-            background-attachment: fixed !important;
-            background-repeat: no-repeat !important;
+        /* 固定全屏背景层 —— 彻底解决闪烁 */
+        .page-bg {
+            position: fixed;
+            left: 0; top: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+            transition: background-image 0.5s ease;
         }
 
         /* 答题页面背景题号 */
@@ -121,12 +111,15 @@
         }
         .option-btn.selected {
             background-color: #fff7ed;
-            border-color: #fb92c;
+            border-color: #fb923c;
             color: #c2410c;
         }
     </style>
 </head>
 <body>
+
+<!-- 固定背景层，永不闪烁 -->
+<div class="page-bg" id="pageBg"></div>
 
 <!-- 弹窗 -->
 <div class="modal-overlay" id="charModal">
@@ -134,7 +127,7 @@
         <img id="modalImg" class="w-48 h-48 object-cover rounded-full mx-auto mb-4" src="">
         <h2 id="modalName" class="text-2xl font-bold mb-2"></h2>
         <p id="modalGame" class="text-gray-500 mb-2"></p>
-        <p id="modalDesc" class="text-sm text-gray-600 text-left mb-5 leading-relaxed"></p>
+        <p id="modalDesc" class="text-gray-800 text-base text-left mb-5 leading-relaxed"></p>
         <button onclick="closeModal()" class="px-6 py-2 bg-gray-200 rounded-xl">关闭</button>
     </div>
 </div>
@@ -253,22 +246,22 @@
 <script>
     // 角色数据
     const characters = [
-        { type: "ENFP", name: "许堇悠", game: "致命终局", desc: "外向热情、社交感强，情绪感染力拉满。", img: "1.jpg" },
-        { type: "INTJ", name: "许樱叶", game: "致命终局", desc: "极度内向、疏离、独立，不爱解释。", img: "2.jpg" },
-        { type: "INFJ", name: "言梦绫", game: "致命终局", desc: "温柔隐忍、共情力强，习惯照顾他人。", img: "3.jpg" },
-        { type: "INTP", name: "N学姐", game: "致命终局", desc: "理性冷淡，偏爱观察与分析，不爱社交。", img: "4.jpg" },
-        { type: "ESFJ", name: "苑薇", game: "初遇时", desc: "热心合群，在意群体氛围与他人评价。", img: "5.jpg" },
-        { type: "ESTJ", name: "吴正", game: "初遇时", desc: "强势直接，行动力与掌控欲极强。", img: "6.jpg" },
-        { type: "ISFP", name: "季宣瑶", game: "初遇时", desc: "安静温柔，情绪内敛，注重细节感受。", img: "7.jpg" },
-        { type: "ESFP", name: "王嘉豪", game: "初遇时", desc: "外向开朗，爱玩爱闹，随性直白。", img: "8.jpg" },
-        { type: "ISTP", name: "顾颉", game: "初遇时", desc: "话少冷静，观察力强，务实低调。", img: "9.jpg" },
-        { type: "ENFJ", name: "程冉惠", game: "初遇时", desc: "温柔大方，擅长照顾与引导他人。", img: "10.jpg" },
-        { type: "ESFP", name: "黎月鱼", game: "第零封情书", desc: "热情主动，表现欲强，恋爱中直球黏人。", img: "11.jpg" },
-        { type: "ESTP", name: "陆见深", game: "第零封情书", desc: "现实机灵，擅长察言观色，灵活善变。", img: "12.jpg" },
-        { type: "ESFJ", name: "吴常", game: "第零封情书", desc: "热情外向，话多自来熟，社交氛围担当。", img: "13.jpg" },
-        { type: "ISFP", name: "郝梦", game: "第零封情书", desc: "内向少言，内心细腻，用行动表达关心。", img: "14.jpg" },
-        { type: "ISTJ", name: "林屿鹿", game: "第零封情书", desc: "务实严谨，守规尽责，踏实可靠。", img: "15.jpg" },
-        { type: "ENTJ", name: "王川", game: "第零封情书", desc: "强势果断，目标明确，天生领导者。", img: "16.jpg" },
+        { type: "ENFP", name: "许堇悠", game: "致命终局", desc: "你会被她鲜活跳脱的元气深深吸引。她像小太阳一样，用热情和多变的点子照亮你平淡的生活，看似随性的外表下藏着细腻的共情力，能精准捕捉你没说出口的情绪。对习惯隐藏心事的人来说，她的直接与热烈，是能让人放下防备的安心感。欺骗到最后，然后成为真实。", img: "1.jpg" },
+        { type: "INTJ", name: "许樱叶", game: "致命终局", desc: "你会被她神秘疏离的气质和极强的反差感吸引。她习惯独来独往，情绪从不外露，却能一眼看穿你的伪装和脆弱。她看似冷漠，却会用周密的方式为你扫清障碍，这种不动声色的保护，对渴望被理解又怕麻烦的人来说，有着致命的吸引力。使用指南：请不要夺刀。", img: "2.jpg" },
+        { type: "INFJ", name: "言梦绫", game: "致命终局", desc: "你会被她温柔隐忍的特质吸引。她共情力极强，总能精准捕捉你的情绪，习惯默默付出、温柔守护，却从不求回报。她的温柔不是讨好，而是发自内心的包容与理解，对内心敏感、渴望被看见的人来说，她就是那个能接住你所有情绪的港湾。好想和梦绫演对手话剧……", img: "3.jpg" },
+        { type: "INTP", name: "N学姐", game: "致命终局", desc: "你会被她理性冷静的独特气质吸引。她偏爱观察与分析，不擅长也不屑于说漂亮话，却总能用逻辑帮你理清一团乱麻的思绪。她看似冷淡，却会用独特的视角陪你探索世界，对喜欢思考、讨厌虚与委蛇的人来说，她的纯粹与理性格外动人。学姐，这道微积分怎么做？", img: "4.jpg" },
+        { type: "ESFJ", name: "苑薇", game: "初遇时", desc: "你会被她温暖贴心的性格吸引。她像小管家一样照顾着身边人的情绪，擅长维系氛围，总能记住你不经意说过的喜好。她的关心从不刻意，却能让你在细节里感受到被重视，对渴望稳定与温暖的人来说，她就是能给你满满安全感的存在。也许我真的会成为女主？", img: "5.jpg" },
+        { type: "ESTJ", name: "吴正", game: "初遇时", desc: "你会被他强势直接的可靠感吸引。他做事雷厉风行、目标明确，从不拖泥带水，能在你迷茫时给出最直接的方向。他的关心从不是甜言蜜语，而是 “把事情做好” 的实际行动，对容易犹豫、需要被带领的人来说，他的果断与担当就是定心丸。好感度事件：拳击。", img: "6.jpg" },
+        { type: "ISFP", name: "季宣瑶", game: "初遇时", desc: "你会被她安静温柔的气质吸引。她不善言辞，却会用细腻的行动表达关心，比如悄悄为你准备小礼物，或是默默陪在你身边。她的世界简单又柔软，能包容你所有的情绪，对渴望被温柔对待、不喜欢喧闹的人来说，她就是治愈的存在。世界第一好组长！", img: "7.jpg" },
+        { type: "ESFP", name: "王嘉豪", game: "初遇时", desc: "你会被他外向开朗的鲜活气息吸引。他像小太阳一样，总能用玩笑和热闹驱散你所有的不开心，和他在一起永远不会觉得无聊。他的喜欢直白又热烈，从不藏着掖着，对压抑内敛的人来说，他的阳光与真诚，能带你走出情绪的低谷。你千万不能考倒数第三背叛我。", img: "8.jpg" },
+        { type: "ISTP", name: "顾颉", game: "初遇时", desc: "你会被他外冷内热的反差感吸引。他话少冷静，却有着极强的动手能力和可靠感，总能在你遇到麻烦时默默出手解决。他不擅长表达关心，却会用实际行动证明自己，对不喜欢虚情假意、看重真诚的人来说，他的沉默与靠谱格外戳人。顾颉不语，只是拳击。", img: "9.jpg" },
+        { type: "ENFJ", name: "程冉惠", game: "初遇时", desc: "你会被她温柔大方的引导力吸引。她像大姐姐一样，总能敏锐察觉到你的不安，并用温柔又坚定的方式鼓励你、支持你。她擅长照顾他人情绪，也能在你迷茫时给出建议，对渴望被理解、需要被带领的人来说，她就是温柔又可靠的光。那啥，不然你的作业也借我抄抄。", img: "10.jpg" },
+        { type: "ESFP", name: "黎月鱼", game: "第零封情书", desc: "你会被她热情主动的鲜活感吸引。她表现欲强，喜欢被关注，也毫不掩饰自己的喜欢，和她在一起永远充满新鲜感。她乐于被带领，也会用热烈的方式回应你的付出，对习惯了平淡、渴望被热烈爱着的人来说，她的直白与鲜活格外动人。她的眼皮好像有把人吸进去的魔力，好想掐。", img: "11.jpg" },
+        { type: "ESTP", name: "陆见深", game: "第零封情书", desc: "你会被他灵活善变的魅力吸引。他察言观色的能力极强，总能精准拿捏你的喜好，情话与套路信手拈来，带着危险又迷人的气息。他的喜欢充满推拉与刺激，对厌倦了平淡、追求新鲜感的人来说，他的神秘与多变，有着让人沦陷的魔力。所以，上明水天台风干吧。", img: "12.jpg" },
+        { type: "ESFJ", name: "吴常", game: "第零封情书", desc: "你会被他热情话多的活力吸引。他自来熟、爱分享，总能用叽叽喳喳的日常填满你的生活，让你不再孤单。他的关心直白又热烈，会主动帮你融入集体，对内向社恐、害怕被忽略的人来说，他的热情就是最温暖的陪伴。情书钦定好男人。", img: "13.jpg" },
+        { type: "ISFP", name: "郝梦", game: "第零封情书", desc: "你会被她沉默却长情的温柔吸引。她话少内敛，不善表达，却会把所有的关心藏在行动里，默默守护在意的人。她的喜欢安静又坚定，从不会说漂亮话，却会在细节里让你感受到被爱，对渴望细水长流的感情来说，她的沉默与长情格外戳人。源文件…还会再见吗。", img: "14.jpg" },
+        { type: "ISTJ", name: "林屿鹿", game: "第零封情书", desc: "你会被他严谨可靠的踏实感吸引。她守规矩、重责任，做事按部就班，从不会给你画大饼，所有的关心都藏在 “说到做到” 的细节里。她的世界稳定又有序，能给你满满的安全感，对害怕变数、渴望安稳的人来说，她的靠谱就是最安心的存在。千万别去带弹唱的酒馆！！", img: "15.jpg" },
+        { type: "ENTJ", name: "王川", game: "第零封情书", desc: "你会被他强势果断的掌控力吸引。他目标明确、执行力极强，天生带着领袖气场，能在你迷茫时为你指明方向。他的喜欢带着 “势在必得” 的坚定，会用行动为你扫清障碍，对习惯了被动、需要被带领的人来说，他的果断与担当就是最可靠的依靠。相视无言，我知道你选择了电脑，寄吧王川。", img: "16.jpg" },
     ];
 
     // 题目
@@ -335,23 +328,23 @@
         { q: "你觉得谁最适合恋爱：", a: ["鱼鱼", "小黎", "于于", "电脑"] }
     ];
 
-    // 全局变量
     let currentQ = 0;
     let answers = Array(60).fill(null);
     let dCount = 0;
 
-    // 自动切换背景图 —— 已修复逻辑
+    // ✅ 修复：背景永远不闪
     function updateBackground() {
-        document.body.classList.remove('bg-1', 'bg-2', 'bg-3');
-        setTimeout(() => {
-            if (currentQ >= 0 && currentQ <= 15) {
-                document.body.classList.add('bg-1');
-            } else if (currentQ >= 16 && currentQ <= 34) {
-                document.body.classList.add('bg-2');
-            } else if (currentQ >= 35 && currentQ <= 59) {
-                document.body.classList.add('bg-3');
-            }
-        }, 50);
+        let url = '';
+        if (currentQ >= 0 && currentQ <= 15) url = './bg1.jpg';
+        else if (currentQ >= 16 && currentQ <= 34) url = './bg2.jpg';
+        else if (currentQ >= 35 && currentQ <= 59) url = './bg3.jpg';
+        
+        if(url) {
+            document.getElementById('pageBg').style.backgroundImage = 
+                `linear-gradient(rgba(255,255,255,0.85), rgba(255,255,255,0.85)), url('${url}')`;
+        } else {
+            document.getElementById('pageBg').style.backgroundImage = 'none';
+        }
     }
 
     // 初始化图鉴
@@ -394,7 +387,7 @@
         document.getElementById(id).classList.remove('hidden');
         
         if(id !== 'testPage') {
-            document.body.classList.remove('bg-1','bg-2','bg-3');
+            document.getElementById('pageBg').style.backgroundImage = 'none';
         }
     }
 
@@ -402,7 +395,7 @@
         currentQ = 0;
         answers.fill(null);
         dCount = 0;
-        document.body.classList.remove('bg-1','bg-2','bg-3');
+        document.getElementById('pageBg').style.backgroundImage = 'none';
         showAll('startPage');
     }
 
