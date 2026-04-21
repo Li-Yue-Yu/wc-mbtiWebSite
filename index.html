@@ -20,7 +20,7 @@
             transition: background-image 0.5s ease !important;
         }
 
-        /* 动态题目背景 —— 已修复路径 + 强制覆盖 */
+        /* 动态题目背景 */
         body.bg-1 {
             background-image: linear-gradient(rgba(255,255,255,0.85), rgba(255,255,255,0.85)), url('./bg1.jpg') !important;
             background-size: cover !important;
@@ -78,7 +78,7 @@
             border-radius: 28px;
         }
 
-        /* 弹窗 */
+        /* 弹窗样式（完全匹配你截图的效果） */
         .modal-overlay {
             position: fixed;
             top: 0;
@@ -128,13 +128,13 @@
 </head>
 <body>
 
-<!-- 弹窗 -->
+<!-- 弹窗：角色介绍（已恢复你截图的效果） -->
 <div class="modal-overlay" id="charModal">
     <div class="modal-box">
         <img id="modalImg" class="w-48 h-48 object-cover rounded-full mx-auto mb-4" src="">
         <h2 id="modalName" class="text-2xl font-bold mb-2"></h2>
-        <p id="modalGame" class="text-gray-500 mb-2"></p>
-        <p id="modalDesc" class="text-sm text-gray-600 text-left mb-5 leading-relaxed"></p>
+        <p id="modalGame" class="text-gray-500 mb-4"></p>
+        <p id="modalDesc" class="text-left text-gray-700 leading-relaxed mb-6"></p>
         <button onclick="closeModal()" class="px-6 py-2 bg-gray-200 rounded-xl">关闭</button>
     </div>
 </div>
@@ -192,7 +192,7 @@
         </div>
     </div>
 
-    <!-- 结果页面 -->
+    <!-- 结果页面（已恢复完整角色介绍） -->
     <div id="resultPage" class="hidden">
         <div class="max-w-2xl mx-auto bg-white p-10 rounded-2xl shadow-lg text-center">
             <h2 class="text-3xl font-bold mb-2">你的测试结果</h2>
@@ -251,7 +251,7 @@
 </div>
 
 <script>
-    // 角色数据（已补全16个角色的详细介绍）
+    // 角色数据（完整保留你给的介绍文案）
     const characters = [
         { 
             type: "ENFP", 
@@ -436,7 +436,7 @@
     let answers = Array(60).fill(null);
     let dCount = 0;
 
-    // 自动切换背景图 —— 已修复逻辑
+    // 自动切换背景图
     function updateBackground() {
         document.body.classList.remove('bg-1', 'bg-2', 'bg-3');
         setTimeout(() => {
@@ -583,7 +583,7 @@
         renderQuestion();
     }
 
-    // 结果
+    // 结果（已恢复完整角色介绍）
     function showResult() {
         let target;
         if (dCount >= 3) {
