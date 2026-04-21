@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>悠悠球工作室约会测试</title>
+    <title>悠悠工作室约会测试</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         * {
@@ -17,20 +17,30 @@
             background-size: 20px 20px;
             min-height: 100vh;
             font-family: system-ui, -apple-system, sans-serif;
+            transition: background-image 0.5s ease !important;
         }
 
-        /* 固定全屏背景层 —— 彻底解决闪烁 */
-        .page-bg {
-            position: fixed;
-            left: 0; top: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
-            background-repeat: no-repeat;
-            transition: background-image 0.5s ease;
+        /* 你第一次用的 无闪烁 背景切换方式（我恢复了） */
+        body.test-bg-1 {
+            background-image: linear-gradient(rgba(255,255,255,0.85), rgba(255,255,255,0.85)), url('./bg1.jpg') !important;
+            background-size: cover !important;
+            background-position: center !important;
+            background-attachment: fixed !important;
+            background-repeat: no-repeat !important;
+        }
+        body.test-bg-2 {
+            background-image: linear-gradient(rgba(255,255,255,0.85), rgba(255,255,255,0.85)), url('./bg2.jpg') !important;
+            background-size: cover !important;
+            background-position: center !important;
+            background-attachment: fixed !important;
+            background-repeat: no-repeat !important;
+        }
+        body.test-bg-3 {
+            background-image: linear-gradient(rgba(255,255,255,0.85), rgba(255,255,255,0.85)), url('./bg3.jpg') !important;
+            background-size: cover !important;
+            background-position: center !important;
+            background-attachment: fixed !important;
+            background-repeat: no-repeat !important;
         }
 
         /* 答题页面背景题号 */
@@ -63,7 +73,6 @@
         .rounded-xl {
             border-radius: 20px;
         }
-
         .rounded-2xl {
             border-radius: 28px;
         }
@@ -84,12 +93,10 @@
             pointer-events: none;
             transition: opacity 0.3s;
         }
-
         .modal-overlay.show {
             opacity: 1;
             pointer-events: all;
         }
-
         .modal-box {
             background: white;
             border-radius: 24px;
@@ -100,7 +107,6 @@
             transform: scale(0.9);
             transition: transform 0.3s;
         }
-
         .modal-overlay.show .modal-box {
             transform: scale(1);
         }
@@ -118,28 +124,24 @@
 </head>
 <body>
 
-<!-- 固定背景层，永不闪烁 -->
-<div class="page-bg" id="pageBg"></div>
-
 <!-- 弹窗 -->
 <div class="modal-overlay" id="charModal">
     <div class="modal-box">
         <img id="modalImg" class="w-48 h-48 object-cover rounded-full mx-auto mb-4" src="">
         <h2 id="modalName" class="text-2xl font-bold mb-2"></h2>
         <p id="modalGame" class="text-gray-500 mb-2"></p>
-        <p id="modalDesc" class="text-gray-800 text-base text-left mb-5 leading-relaxed"></p>
+        <p id="modalDesc" class="text-gray-800 text-base text-left leading-relaxed"></p>
         <button onclick="closeModal()" class="px-6 py-2 bg-gray-200 rounded-xl">关闭</button>
     </div>
 </div>
 
 <div class="max-w-6xl mx-auto px-4 py-10 relative">
-
     <!-- 开始页面 -->
     <div id="startPage" class="grid grid-cols-1 md:grid-cols-2 gap-10 items-center min-h-[80vh]">
         <div>
             <h1 class="text-[clamp(2rem,5vw,3.5rem)] font-bold leading-tight mb-6">
                 你最适合和<br>
-                <span class="text-orange-500">悠悠球工作室</span><br>
+                <span class="text-orange-500">悠悠工作室</span><br>
                 的哪一位约会
             </h1>
             <p class="text-gray-500 text-lg mb-10">仅供娱乐，切勿参考。</p>
@@ -149,7 +151,7 @@
             </div>
         </div>
         <div class="flex justify-center">
-            <img src="logo.png" class="max-w-sm w-full rounded-2xl shadow-lg" alt="工作室logo">
+            <img src="logo.png" class="max-w-sm w-full rounded-2xl shadow-lg" alt="logo">
         </div>
     </div>
 
@@ -159,8 +161,7 @@
             <h2 class="text-3xl font-bold">角色图鉴</h2>
             <button onclick="backToStart()" class="px-5 py-2 border rounded-xl">返回</button>
         </div>
-        <div id="charGrid" class="grid grid-cols-2 sm:grid-cols-4 gap-6">
-        </div>
+        <div id="charGrid" class="grid grid-cols-2 sm:grid-cols-4 gap-6"></div>
     </div>
 
     <!-- 答题页面 -->
@@ -195,14 +196,12 @@
             <h3 id="resultName" class="text-2xl font-bold mb-2"></h3>
             <p id="resultIntro" class="text-gray-600 mb-8 text-left leading-relaxed"></p>
 
-            <!-- MBTI维度分析 -->
             <div class="bg-gray-50 p-6 rounded-2xl mb-8 text-left">
                 <h4 class="font-semibold mb-4">MBTI维度倾向</h4>
                 <div class="space-y-4">
                     <div>
                         <div class="flex justify-between text-sm mb-1">
-                            <span>外向 E</span>
-                            <span>内向 I</span>
+                            <span>外向 E</span><span>内向 I</span>
                         </div>
                         <div class="h-3 bg-gray-200 rounded-full overflow-hidden">
                             <div id="eiBar" class="h-full bg-orange-400 w-0 transition-all"></div>
@@ -210,8 +209,7 @@
                     </div>
                     <div>
                         <div class="flex justify-between text-sm mb-1">
-                            <span>实感 S</span>
-                            <span>直觉 N</span>
+                            <span>实感 S</span><span>直觉 N</span>
                         </div>
                         <div class="h-3 bg-gray-200 rounded-full overflow-hidden">
                             <div id="snBar" class="h-full bg-green-400 w-0 transition-all"></div>
@@ -219,8 +217,7 @@
                     </div>
                     <div>
                         <div class="flex justify-between text-sm mb-1">
-                            <span>思考 T</span>
-                            <span>情感 F</span>
+                            <span>思考 T</span><span>情感 F</span>
                         </div>
                         <div class="h-3 bg-gray-200 rounded-full overflow-hidden">
                             <div id="tfBar" class="h-full bg-blue-400 w-0 transition-all"></div>
@@ -228,8 +225,7 @@
                     </div>
                     <div>
                         <div class="flex justify-between text-sm mb-1">
-                            <span>判断 J</span>
-                            <span>感知 P</span>
+                            <span>判断 J</span><span>感知 P</span>
                         </div>
                         <div class="h-3 bg-gray-200 rounded-full overflow-hidden">
                             <div id="jpBar" class="h-full bg-purple-400 w-0 transition-all"></div>
@@ -244,7 +240,7 @@
 </div>
 
 <script>
-    // 角色数据
+    // 角色数据（完整介绍）
     const characters = [
         { type: "ENFP", name: "许堇悠", game: "致命终局", desc: "你会被她鲜活跳脱的元气深深吸引。她像小太阳一样，用热情和多变的点子照亮你平淡的生活，看似随性的外表下藏着细腻的共情力，能精准捕捉你没说出口的情绪。对习惯隐藏心事的人来说，她的直接与热烈，是能让人放下防备的安心感。欺骗到最后，然后成为真实。", img: "1.jpg" },
         { type: "INTJ", name: "许樱叶", game: "致命终局", desc: "你会被她神秘疏离的气质和极强的反差感吸引。她习惯独来独往，情绪从不外露，却能一眼看穿你的伪装和脆弱。她看似冷漠，却会用周密的方式为你扫清障碍，这种不动声色的保护，对渴望被理解又怕麻烦的人来说，有着致命的吸引力。使用指南：请不要夺刀。", img: "2.jpg" },
@@ -332,18 +328,15 @@
     let answers = Array(60).fill(null);
     let dCount = 0;
 
-    // ✅ 修复：背景永远不闪
+    // ✅ 你第一次用的 无闪烁背景切换（完全恢复）
     function updateBackground() {
-        let url = '';
-        if (currentQ >= 0 && currentQ <= 15) url = './bg1.jpg';
-        else if (currentQ >= 16 && currentQ <= 34) url = './bg2.jpg';
-        else if (currentQ >= 35 && currentQ <= 59) url = './bg3.jpg';
-        
-        if(url) {
-            document.getElementById('pageBg').style.backgroundImage = 
-                `linear-gradient(rgba(255,255,255,0.85), rgba(255,255,255,0.85)), url('${url}')`;
-        } else {
-            document.getElementById('pageBg').style.backgroundImage = 'none';
+        document.body.classList.remove('test-bg-1', 'test-bg-2', 'test-bg-3');
+        if (currentQ >= 0 && currentQ <= 15) {
+            document.body.classList.add('test-bg-1');
+        } else if (currentQ >= 16 && currentQ <= 34) {
+            document.body.classList.add('test-bg-2');
+        } else if (currentQ >= 35 && currentQ <= 59) {
+            document.body.classList.add('test-bg-3');
         }
     }
 
@@ -373,7 +366,6 @@
         document.getElementById('modalDesc').textContent = c.desc;
         document.getElementById('charModal').classList.add('show');
     }
-
     function closeModal() {
         document.getElementById('charModal').classList.remove('show');
     }
@@ -387,7 +379,7 @@
         document.getElementById(id).classList.remove('hidden');
         
         if(id !== 'testPage') {
-            document.getElementById('pageBg').style.backgroundImage = 'none';
+            document.body.classList.remove('test-bg-1','test-bg-2','test-bg-3');
         }
     }
 
@@ -395,7 +387,7 @@
         currentQ = 0;
         answers.fill(null);
         dCount = 0;
-        document.getElementById('pageBg').style.backgroundImage = 'none';
+        document.body.classList.remove('test-bg-1','test-bg-2','test-bg-3');
         showAll('startPage');
     }
 
@@ -404,7 +396,7 @@
         showAll('bookPage');
     }
 
-    // 答题
+    // 答题逻辑
     function startTest() {
         currentQ = 0;
         answers.fill(null);
@@ -432,9 +424,7 @@
                 btn.className = 'option-btn w-full p-4 border rounded-xl text-left hover:bg-orange-50 transition-colors';
                 btn.textContent = k + ' · ' + q.a[i];
                 btn.onclick = () => selectAnswer(k, btn);
-                if (answers[currentQ] === k) {
-                    btn.classList.add('selected');
-                }
+                if (answers[currentQ] === k) btn.classList.add('selected');
                 optBox.appendChild(btn);
             });
 
@@ -448,26 +438,15 @@
         answers[currentQ] = k;
         if (currentQ >= 51 && k === 'D') dCount++;
         setTimeout(() => {
-            if (currentQ >= 59) {
-                showResult();
-            } else {
-                nextQuestion();
-            }
+            currentQ >= 59 ? showResult() : nextQuestion();
         }, 300);
     }
 
     function nextQuestion() {
-        if (answers[currentQ] === null) {
-            alert('请先选择一个选项');
-            return;
-        }
+        if (!answers[currentQ]) { alert('请先选择一个选项'); return; }
         currentQ++;
         updateBackground();
-        if (currentQ >= 60) {
-            showResult();
-        } else {
-            renderQuestion();
-        }
+        currentQ >= 60 ? showResult() : renderQuestion();
     }
 
     function prevQuestion() {
@@ -479,27 +458,16 @@
 
     // 结果
     function showResult() {
-        let target;
-        if (dCount >= 3) {
-            target = characters.find(c => c.name === '王川');
-        } else {
-            target = characters[Math.floor(Math.random() * characters.length)];
-        }
-
+        let target = dCount >= 3 ? characters.find(c => c.name === '王川') : characters[Math.floor(Math.random() * characters.length)];
         document.getElementById('resultAvatar').src = target.img;
         document.getElementById('resultName').textContent = target.name + ' · ' + target.type;
         document.getElementById('resultIntro').textContent = target.desc;
         document.getElementById('resultTip').textContent = target.game + ' · 维度接近平衡时已取略偏方向';
 
-        const ei = Math.random() * 100;
-        const sn = Math.random() * 100;
-        const tf = Math.random() * 100;
-        const jp = Math.random() * 100;
-
-        document.getElementById('eiBar').style.width = ei + '%';
-        document.getElementById('snBar').style.width = sn + '%';
-        document.getElementById('tfBar').style.width = tf + '%';
-        document.getElementById('jpBar').style.width = jp + '%';
+        document.getElementById('eiBar').style.width = Math.random() * 100 + '%';
+        document.getElementById('snBar').style.width = Math.random() * 100 + '%';
+        document.getElementById('tfBar').style.width = Math.random() * 100 + '%';
+        document.getElementById('jpBar').style.width = Math.random() * 100 + '%';
 
         showAll('resultPage');
     }
