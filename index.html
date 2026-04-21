@@ -17,30 +17,40 @@
             background-size: 20px 20px;
             min-height: 100vh;
             font-family: system-ui, -apple-system, sans-serif;
-            transition: background-image 0.5s ease !important;
+            /* 修复：给背景过渡，只过渡透明度，不换图 */
+            transition: opacity 0.4s ease;
+            position: relative;
         }
 
-        /* 动态题目背景 */
-        body.bg-1 {
-            background-image: linear-gradient(rgba(255,255,255,0.85), rgba(255,255,255,0.85)), url('./bg1.jpg') !important;
-            background-size: cover !important;
-            background-position: center !important;
-            background-attachment: fixed !important;
-            background-repeat: no-repeat !important;
+        /* 修复：用伪元素做背景层，避免每次换图闪烁 */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+            opacity: 0;
+            z-index: -1;
+            transition: opacity 0.4s ease;
         }
-        body.bg-2 {
-            background-image: linear-gradient(rgba(255,255,255,0.85), rgba(255,255,255,0.85)), url('./bg2.jpg') !important;
-            background-size: cover !important;
-            background-position: center !important;
-            background-attachment: fixed !important;
-            background-repeat: no-repeat !important;
+
+        /* 修复：切换背景只改 opacity，不重设 background-image */
+        body.bg-1::before {
+            background-image: linear-gradient(rgba(255,255,255,0.85), rgba(255,255,255,0.85)), url('./bg1.jpg');
+            opacity: 1;
         }
-        body.bg-3 {
-            background-image: linear-gradient(rgba(255,255,255,0.85), rgba(255,255,255,0.85)), url('./bg3.jpg') !important;
-            background-size: cover !important;
-            background-position: center !important;
-            background-attachment: fixed !important;
-            background-repeat: no-repeat !important;
+        body.bg-2::before {
+            background-image: linear-gradient(rgba(255,255,255,0.85), rgba(255,255,255,0.85)), url('./bg2.jpg');
+            opacity: 1;
+        }
+        body.bg-3::before {
+            background-image: linear-gradient(rgba(255,255,255,0.85), rgba(255,255,255,0.85)), url('./bg3.jpg');
+            opacity: 1;
         }
 
         /* 答题页面背景题号 */
@@ -436,18 +446,26 @@
     let answers = Array(60).fill(null);
     let dCount = 0;
 
-    // 自动切换背景图
+    // 修复：预加载背景图，防止切换时白屏
+    const preloadImages = () => {
+        new Image().src = './bg1.jpg';
+        new Image().src = './bg2.jpg';
+        new Image().src = './bg3.jpg';
+    };
+    preloadImages();
+
+    // 修复：只切换 class，不频繁改 background-image，减少闪烁
     function updateBackground() {
+        // 先移除所有背景 class
         document.body.classList.remove('bg-1', 'bg-2', 'bg-3');
-        setTimeout(() => {
-            if (currentQ >= 0 && currentQ <= 15) {
-                document.body.classList.add('bg-1');
-            } else if (currentQ >= 16 && currentQ <= 34) {
-                document.body.classList.add('bg-2');
-            } else if (currentQ >= 35 && currentQ <= 59) {
-                document.body.classList.add('bg-3');
-            }
-        }, 50);
+        // 直接加对应 class，让伪元素控制背景和透明度
+        if (currentQ >= 0 && currentQ <= 15) {
+            document.body.classList.add('bg-1');
+        } else if (currentQ >= 16 && currentQ <= 34) {
+            document.body.classList.add('bg-2');
+        } else if (currentQ >= 35 && currentQ <= 59) {
+            document.body.classList.add('bg-3');
+        }
     }
 
     // 初始化图鉴
