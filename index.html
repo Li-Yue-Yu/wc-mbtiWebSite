@@ -20,7 +20,6 @@
             transition: background-image 0.5s ease;
         }
 
-        /* 动态题目背景 */
         body.bg-1 {
             background-image: linear-gradient(rgba(255,255,255,0.85), rgba(255,255,255,0.85)), url('bg1.jpg');
             background-size: cover;
@@ -40,7 +39,6 @@
             background-attachment: fixed;
         }
 
-        /* 答题页面背景题号 */
         .question-number-bg {
             position: absolute;
             top: 50%;
@@ -54,7 +52,6 @@
             white-space: nowrap;
         }
 
-        /* 滑动动画 */
         .slide-enter {
             transform: translateX(100%);
             opacity: 0;
@@ -66,64 +63,43 @@
             transition: transform 0.4s ease, opacity 0.4s ease;
         }
 
-        /* 圆角 */
-        .rounded-xl {
-            border-radius: 20px;
-        }
+        .rounded-xl { border-radius: 20px; }
+        .rounded-2xl { border-radius: 28px; }
 
-        .rounded-2xl {
-            border-radius: 28px;
-        }
-
-        /* 弹窗 */
         .modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.6);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 9999;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.3s;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.6); display: flex; align-items: center; justify-content: center;
+            z-index: 9999; opacity: 0; pointer-events: none; transition: opacity 0.3s;
         }
-
-        .modal-overlay.show {
-            opacity: 1;
-            pointer-events: all;
-        }
-
+        .modal-overlay.show { opacity: 1; pointer-events: all; }
         .modal-box {
-            background: white;
-            border-radius: 24px;
-            max-width: 500px;
-            width: 90%;
-            padding: 30px;
-            text-align: center;
-            transform: scale(0.9);
-            transition: transform 0.3s;
+            background: white; border-radius: 24px; max-width: 500px; width: 90%; padding: 30px;
+            text-align: center; transform: scale(0.9); transition: transform 0.3s;
         }
+        .modal-overlay.show .modal-box { transform: scale(1); }
 
-        .modal-overlay.show .modal-box {
-            transform: scale(1);
-        }
+        .option-btn { transition: all 0.2s; }
+        .option-btn.selected { background-color: #fff7ed; border-color: #fb923c; color: #c2410c; }
 
-        /* 选项选中样式 */
-        .option-btn {
-            transition: all 0.2s;
-        }
-        .option-btn.selected {
-            background-color: #fff7ed;
-            border-color: #fb923c;
-            color: #c2410c;
+        /* 图鉴 / 答题页 右上角B站按钮样式（保持不变） */
+        .bilibili-fixed {
+            position: fixed; top: 20px; right: 20px; z-index: 999;
+            display: inline-flex; align-items: center; gap: 6px;
+            padding: 6px 12px; background: #FB7299; color: #fff;
+            border-radius: 999px; font-size: 12px; text-decoration: none;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
         }
     </style>
 </head>
 <body>
+
+<!-- 图鉴 / 答题页 右上角B站按钮（位置不变） -->
+<a class="bilibili-fixed" href="https://space.bilibili.com/1182096982" target="_blank">
+<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+<path d="M17,4H7C5.89,4 5,4.9 5,6V18A2,2 0 0,0 7,20H17A2,2 0 0,0 19,18V6C19,4.89 18.1,4 17,4M10,14V12H8V10H10V8H12V10H14V12H12V14H10Z"/>
+</svg>
+关注游戏作者
+</a>
 
 <!-- 弹窗 -->
 <div class="modal-overlay" id="charModal">
@@ -137,7 +113,6 @@
 </div>
 
 <div class="max-w-6xl mx-auto px-4 py-10 relative">
-
     <!-- 开始页面 -->
     <div id="startPage" class="grid grid-cols-1 md:grid-cols-2 gap-10 items-center min-h-[80vh]">
         <div>
@@ -152,8 +127,20 @@
                 <button onclick="showBook()" class="px-8 py-4 border border-gray-300 rounded-2xl text-lg">角色图鉴</button>
             </div>
         </div>
-        <div class="flex justify-center">
-            <img src="logo.png" class="max-w-sm w-full rounded-2xl shadow-lg" alt="工作室logo">
+        <div class="flex flex-col items-center justify-center">
+            <img src="logo.png" class="max-w-sm w-full rounded-2xl shadow-lg mb-4" alt="logo">
+            <!-- 👇 B站按钮移到了右侧Logo下方，功能和样式不变 -->
+            <a href="https://space.bilibili.com/1182096982" target="_blank" style="
+            display: inline-flex; align-items: center; gap: 8px;
+            padding: 8px 16px; background: #FB7299; color: #fff;
+            border-radius: 999px; font-size: 14px; text-decoration: none;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            ">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M17,4H7C5.89,4 5,4.9 5,6V18A2,2 0 0,0 7,20H17A2,2 0 0,0 19,18V6C19,4.89 18.1,4 17,4M10,14V12H8V10H10V8H12V10H14V12H12V14H10Z"/>
+                </svg>
+                关注游戏作者
+            </a>
         </div>
     </div>
 
@@ -163,7 +150,23 @@
             <h2 class="text-3xl font-bold">角色图鉴</h2>
             <button onclick="backToStart()" class="px-5 py-2 border rounded-xl">返回</button>
         </div>
-        <div id="charGrid" class="grid grid-cols-2 sm:grid-cols-4 gap-6">
+        <div id="charGrid" class="grid grid-cols-2 sm:grid-cols-4 gap-6 mb-10"></div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="bg-white p-5 rounded-xl shadow flex flex-col items-center">
+                <h3 class="text-xl font-bold mb-4">致命终局</h3>
+                <img src="game_deadly_endgame.jpg" class="w-full h-48 object-cover rounded-lg mb-4">
+                <a href="https://store.steampowered.com/app/3104230/_Deadly_Endgame/" target="_blank" class="px-4 py-2 bg-orange-500 text-white rounded-lg text-sm">前往Steam商店</a>
+            </div>
+            <div class="bg-white p-5 rounded-xl shadow flex flex-col items-center">
+                <h3 class="text-xl font-bold mb-4">初遇时</h3>
+                <img src="game_first_love.jpg" class="w-full h-48 object-cover rounded-lg mb-4">
+                <a href="https://store.steampowered.com/app/3772010/_/" target="_blank" class="px-4 py-2 bg-orange-500 text-white rounded-lg text-sm">前往Steam商店</a>
+            </div>
+            <div class="bg-white p-5 rounded-xl shadow flex flex-col items-center">
+                <h3 class="text-xl font-bold mb-4">第零封情书</h3>
+                <img src="game_zero_letter.jpg" class="w-full h-48 object-cover rounded-lg mb-4">
+                <a href="https://store.steampowered.com/app/4000980/_/" target="_blank" class="px-4 py-2 bg-orange-500 text-white rounded-lg text-sm">前往Steam商店</a>
+            </div>
         </div>
     </div>
 
@@ -173,8 +176,7 @@
         <div class="w-full max-w-2xl bg-white/95 backdrop-blur p-10 rounded-2xl shadow-lg relative z-10" id="questionCard">
             <div class="mb-6">
                 <div class="flex justify-between text-sm text-gray-500 mb-2">
-                    <span>进度</span>
-                    <span id="progressText">0/60</span>
+                    <span>进度</span><span id="progressText">0/60</span>
                 </div>
                 <div class="h-2 bg-gray-200 rounded-full overflow-hidden">
                     <div id="progressBar" class="h-full bg-orange-500 w-0 transition-all"></div>
@@ -184,6 +186,7 @@
             <div id="options" class="space-y-4"></div>
             <div class="flex justify-between mt-8">
                 <button id="prevBtn" onclick="prevQuestion()" class="px-5 py-2 border rounded-xl">上一题</button>
+                <button onclick="backToStart()" class="px-5 py-2 border rounded-xl">返回首页</button>
                 <button id="nextBtn" onclick="nextQuestion()" class="px-5 py-2 bg-orange-500 text-white rounded-xl">下一题</button>
             </div>
         </div>
@@ -194,51 +197,23 @@
         <div class="max-w-2xl mx-auto bg-white p-10 rounded-2xl shadow-lg text-center">
             <h2 class="text-3xl font-bold mb-2">你的测试结果</h2>
             <p class="text-gray-500 mb-6" id="resultTip"></p>
-
             <img id="resultAvatar" class="w-40 h-40 rounded-full object-cover mx-auto mb-4 border-4 border-orange-100">
             <h3 id="resultName" class="text-2xl font-bold mb-2"></h3>
             <p id="resultIntro" class="text-gray-600 mb-8 text-left leading-relaxed"></p>
 
-            <!-- MBTI维度分析 -->
+            <div id="resultGameSection" class="mb-8 p-6 bg-gray-50 rounded-xl">
+                <h4 class="text-xl font-bold mb-4" id="resultGameTitle"></h4>
+                <img id="resultGameImg" class="w-full h-48 object-cover rounded-lg mb-4 mx-auto">
+                <a id="resultGameLink" href="" target="_blank" class="px-4 py-2 bg-orange-500 text-white rounded-lg text-sm inline-block">前往Steam商店</a>
+            </div>
+
             <div class="bg-gray-50 p-6 rounded-2xl mb-8 text-left">
                 <h4 class="font-semibold mb-4">MBTI维度倾向</h4>
                 <div class="space-y-4">
-                    <div>
-                        <div class="flex justify-between text-sm mb-1">
-                            <span>外向 E</span>
-                            <span>内向 I</span>
-                        </div>
-                        <div class="h-3 bg-gray-200 rounded-full overflow-hidden">
-                            <div id="eiBar" class="h-full bg-orange-400 w-0 transition-all"></div>
-                        </div>
-                    </div>
-                    <div>
-                        <div class="flex justify-between text-sm mb-1">
-                            <span>实感 S</span>
-                            <span>直觉 N</span>
-                        </div>
-                        <div class="h-3 bg-gray-200 rounded-full overflow-hidden">
-                            <div id="snBar" class="h-full bg-green-400 w-0 transition-all"></div>
-                        </div>
-                    </div>
-                    <div>
-                        <div class="flex justify-between text-sm mb-1">
-                            <span>思考 T</span>
-                            <span>情感 F</span>
-                        </div>
-                        <div class="h-3 bg-gray-200 rounded-full overflow-hidden">
-                            <div id="tfBar" class="h-full bg-blue-400 w-0 transition-all"></div>
-                        </div>
-                    </div>
-                    <div>
-                        <div class="flex justify-between text-sm mb-1">
-                            <span>判断 J</span>
-                            <span>感知 P</span>
-                        </div>
-                        <div class="h-3 bg-gray-200 rounded-full overflow-hidden">
-                            <div id="jpBar" class="h-full bg-purple-400 w-0 transition-all"></div>
-                        </div>
-                    </div>
+                    <div><div class="flex justify-between text-sm mb-1"><span>外向 E</span><span>内向 I</span></div><div class="h-3 bg-gray-200 rounded-full overflow-hidden"><div id="eiBar" class="h-full bg-orange-400 w-0 transition-all"></div></div></div>
+                    <div><div class="flex justify-between text-sm mb-1"><span>实感 S</span><span>直觉 N</span></div><div class="h-3 bg-gray-200 rounded-full overflow-hidden"><div id="snBar" class="h-full bg-green-400 w-0 transition-all"></div></div></div>
+                    <div><div class="flex justify-between text-sm mb-1"><span>思考 T</span><span>情感 F</span></div><div class="h-3 bg-gray-200 rounded-full overflow-hidden"><div id="tfBar" class="h-full bg-blue-400 w-0 transition-all"></div></div></div>
+                    <div><div class="flex justify-between text-sm mb-1"><span>判断 J</span><span>感知 P</span></div><div class="h-3 bg-gray-200 rounded-full overflow-hidden"><div id="jpBar" class="h-full bg-purple-400 w-0 transition-all"></div></div></div>
                 </div>
             </div>
 
@@ -248,264 +223,208 @@
 </div>
 
 <script>
-    // 角色数据（已恢复完整描述）
-    const characters = [
-        { type: "ENFP", name: "许堇悠", game: "致命终局", desc: "你会被她鲜活跳脱的元气深深吸引。她像小太阳一样，用热情和多变的点子照亮你平淡的生活，看似随性的外表下藏着细腻的共情力，能精准捕捉你没说出口的情绪。对习惯隐藏心事的人来说，她的直接与热烈，是能让人放下防备的安心感。欺骗到最后，然后成为真实。", img: "1.jpg" },
-        { type: "INTJ", name: "许樱叶", game: "致命终局", desc: "你会被她神秘疏离的气质和极强的反差感吸引。她习惯独来独往，情绪从不外露，却能一眼看穿你的伪装和脆弱。她看似冷漠，却会用周密的方式为你扫清障碍，这种不动声色的保护，对渴望被理解又怕麻烦的人来说，有着致命的吸引力。使用指南：请不要夺刀。", img: "2.jpg" },
-        { type: "INFJ", name: "言梦绫", game: "致命终局", desc: "你会被她温柔隐忍的特质吸引。她共情力极强，总能精准捕捉你的情绪，习惯默默付出、温柔守护，却从不求回报。她的温柔不是讨好，而是发自内心的包容与理解，对内心敏感、渴望被看见的人来说，她就是那个能接住你所有情绪的港湾。好想和梦绫演对手话剧……", img: "3.jpg" },
-        { type: "INTP", name: "N学姐", game: "致命终局", desc: "你会被她理性冷静的独特气质吸引。她偏爱观察与分析，不擅长也不屑于说漂亮话，却总能用逻辑帮你理清一团乱麻的思绪。她看似冷淡，却会用独特的视角陪你探索世界，对喜欢思考、讨厌虚与委蛇的人来说，她的纯粹与理性格外动人。学姐，这道微积分怎么做？", img: "4.jpg" },
-        { type: "ESFJ", name: "苑薇", game: "初遇时", desc: "你会被她温暖贴心的性格吸引。她像小管家一样照顾着身边人的情绪，擅长维系氛围，总能记住你不经意说过的喜好。她的关心从不刻意，却能让你在细节里感受到被重视，对渴望稳定与温暖的人来说，她就是能给你满满安全感的存在。也许我真的会成为女主？", img: "5.jpg" },
-        { type: "ESTJ", name: "吴正", game: "初遇时", desc: "你会被他强势直接的可靠感吸引。他做事雷厉风行、目标明确，从不拖泥带水，能在你迷茫时给出最直接的方向。他的关心从不是甜言蜜语，而是 “把事情做好” 的实际行动，对容易犹豫、需要被带领的人来说，他的果断与担当就是定心丸。好感度事件：拳击。", img: "6.jpg" },
-        { type: "ISFP", name: "季宣瑶", game: "初遇时", desc: "你会被她安静温柔的气质吸引。她不善言辞，却会用细腻的行动表达关心，比如悄悄为你准备小礼物，或是默默陪在你身边。她的世界简单又柔软，能包容你所有的情绪，对渴望被温柔对待、不喜欢喧闹的人来说，她就是治愈的存在。世界第一好组长！", img: "7.jpg" },
-        { type: "ESFP", name: "王嘉豪", game: "初遇时", desc: "你会被他外向开朗的鲜活气息吸引。他像小太阳一样，总能用玩笑和热闹驱散你所有的不开心，和他在一起永远不会觉得无聊。他的喜欢直白又热烈，从不藏着掖着，对压抑内敛的人来说，他的阳光与真诚，能带你走出情绪的低谷。你千万不能考倒数第三背叛我。", img: "8.jpg" },
-        { type: "ISTP", name: "顾颉", game: "初遇时", desc: "你会被他外冷内热的反差感吸引。他话少冷静，却有着极强的动手能力和可靠感，总能在你遇到麻烦时默默出手解决。他不擅长表达关心，却会用实际行动证明自己，对不喜欢虚情假意、看重真诚的人来说，他的沉默与靠谱格外戳人。顾颉不语，只是拳击。", img: "9.jpg" },
-        { type: "ENFJ", name: "程冉惠", game: "初遇时", desc: "你会被她温柔大方的引导力吸引。她像大姐姐一样，总能敏锐察觉到你的不安，并用温柔又坚定的方式鼓励你、支持你。她擅长照顾他人情绪，也能在你迷茫时给出建议，对渴望被理解、需要被带领的人来说，她就是温柔又可靠的光。那啥，不然你的作业也借我抄抄。", img: "10.jpg" },
-        { type: "ESFP", name: "黎月鱼", game: "第零封情书", desc: "你会被她热情主动的鲜活感吸引。她表现欲强，喜欢被关注，也毫不掩饰自己的喜欢，和她在一起永远充满新鲜感。她乐于被带领，也会用热烈的方式回应你的付出，对习惯了平淡、渴望被热烈爱着的人来说，她的直白与鲜活格外动人。她的眼皮好像有把人吸进去的魔力，好想掐。", img: "11.jpg" },
-        { type: "ESTP", name: "陆见深", game: "第零封情书", desc: "你会被他灵活善变的魅力吸引。他察言观色的能力极强，总能精准拿捏你的喜好，情话与套路信手拈来，带着危险又迷人的气息。他的喜欢充满推拉与刺激，对厌倦了平淡、追求新鲜感的人来说，他的神秘与多变，有着让人沦陷的魔力。所以，上明水天台风干吧。", img: "12.jpg" },
-        { type: "ESFJ", name: "吴常", game: "第零封情书", desc: "你会被他热情话多的活力吸引。他自来熟、爱分享，总能用叽叽喳喳的日常填满你的生活，让你不再孤单。他的关心直白又热烈，会主动帮你融入集体，对内向社恐、害怕被忽略的人来说，他的热情就是最温暖的陪伴。情书钦定好男人。", img: "13.jpg" },
-        { type: "ISFP", name: "郝梦", game: "第零封情书", desc: "你会被她沉默却长情的温柔吸引。她话少内敛，不善表达，却会把所有的关心藏在行动里，默默守护在意的人。她的喜欢安静又坚定，从不会说漂亮话，却会在细节里让你感受到被爱，对渴望细水长流的感情来说，她的沉默与长情格外戳人。源文件…还会再见吗。", img: "14.jpg" },
-        { type: "ISTJ", name: "林屿鹿", game: "第零封情书", desc: "你会被他严谨可靠的踏实感吸引。她守规矩、重责任，做事按部就班，从不会给你画大饼，所有的关心都藏在 “说到做到” 的细节里。她的世界稳定又有序，能给你满满的安全感，对害怕变数、渴望安稳的人来说，她的靠谱就是最安心的存在。千万别去带弹唱的酒馆！！", img: "15.jpg" },
-        { type: "ENTJ", name: "王川", game: "第零封情书", desc: "你会被他强势果断的掌控力吸引。他目标明确、执行力极强，天生带着领袖气场，能在你迷茫时为你指明方向。他的喜欢带着 “势在必得” 的坚定，会用行动为你扫清障碍，对习惯了被动、需要被带领的人来说，他的果断与担当就是最可靠的依靠。相视无言，我知道你选择了电脑，寄吧王川。", img: "16.jpg" },
-    ];
+const characters = [
+    { type: "ENFP", name: "许堇悠", game: "致命终局", desc: "你会被她鲜活跳脱的元气深深吸引。她像小太阳一样，用热情和多变的点子照亮你平淡的生活，看似随性的外表下藏着细腻的共情力，能精准捕捉你没说出口的情绪。对习惯隐藏心事的人来说，她的直接与热烈，是能让人放下防备的安心感。欺骗到最后，然后成为真实。", img: "1.jpg" },
+    { type: "INTJ", name: "许樱叶", game: "致命终局", desc: "你会被她神秘疏离的气质和极强的反差感吸引。她习惯独来独往，情绪从不外露，却能一眼看穿你的伪装和脆弱。她看似冷漠，却会用周密的方式为你扫清障碍，这种不动声色的保护，对渴望被理解又怕麻烦的人来说，有着致命的吸引力。使用指南：请不要夺刀。", img: "2.jpg" },
+    { type: "INFJ", name: "言梦绫", game: "致命终局", desc: "你会被她温柔隐忍的特质吸引。她共情力极强，总能精准捕捉你的情绪，习惯默默付出、温柔守护，却从不求回报。她的温柔不是讨好，而是发自内心的包容与理解，对内心敏感、渴望被看见的人来说，她就是那个能接住你所有情绪的港湾。好想和梦绫演对手话剧……", img: "3.jpg" },
+    { type: "INTP", name: "N学姐", game: "致命终局", desc: "你会被她理性冷静的独特气质吸引。她偏爱观察与分析，不擅长也不屑于说漂亮话，却总能用逻辑帮你理清一团乱麻的思绪。她看似冷淡，却会用独特的视角陪你探索世界，对喜欢思考、讨厌虚与委蛇的人来说，她的纯粹与理性格外动人。学姐，这道微积分怎么做？", img: "4.jpg" },
+    { type: "ESFJ", name: "苑薇", game: "初遇时", desc: "你会被她温暖贴心的性格吸引。她像小管家一样照顾着身边人的情绪，擅长维系氛围，总能记住你不经意说过的喜好。她的关心从不刻意，却能让你在细节里感受到被重视，对渴望稳定与温暖的人来说，她就是能给你满满安全感的存在。也许我真的会成为女主？", img: "5.jpg" },
+    { type: "ESTJ", name: "吴正", game: "初遇时", desc: "你会被他强势直接的可靠感吸引。他做事雷厉风行、目标明确，从不拖泥带水，能在你迷茫时给出最直接的方向。他的关心从不是甜言蜜语，而是 “把事情做好” 的实际行动，对容易犹豫、需要被带领的人来说，他的果断与担当就是定心丸。好感度事件：拳击。", img: "6.jpg" },
+    { type: "ISFP", name: "季宣瑶", game: "初遇时", desc: "你会被她安静温柔的气质吸引。她不善言辞，却会用细腻的行动表达关心，比如悄悄为你准备小礼物，或是默默陪在你身边。她的世界简单又柔软，能包容你所有的情绪，对渴望被温柔对待、不喜欢喧闹的人来说，她就是治愈的存在。世界第一好组长！", img: "7.jpg" },
+    { type: "ESFP", name: "王嘉豪", game: "初遇时", desc: "你会被他外向开朗的鲜活气息吸引。他像小太阳一样，总能用玩笑和热闹驱散你所有的不开心，和他在一起永远不会觉得无聊。他的喜欢直白又热烈，从不藏着掖着，对压抑内敛的人来说，他的阳光与真诚，能带你走出情绪的低谷。你千万不能考倒数第三背叛我。", img: "8.jpg" },
+    { type: "ISTP", name: "顾颉", game: "初遇时", desc: "你会被他外冷内热的反差感吸引。他话少冷静，却有着极强的动手能力和可靠感，总能在你遇到麻烦时默默出手解决。他不擅长表达关心，却会用实际行动证明自己，对不喜欢虚情假意、看重真诚的人来说，他的沉默与靠谱格外戳人。顾颉不语，只是拳击。", img: "9.jpg" },
+    { type: "ENFJ", name: "程冉惠", game: "初遇时", desc: "你会被她温柔大方的引导力吸引。她像大姐姐一样，总能敏锐察觉到你的不安，并用温柔又坚定的方式鼓励你、支持你。她擅长照顾他人情绪，也能在你迷茫时给出建议，对渴望被理解、需要被带领的人来说，她就是温柔又可靠的光。那啥，不然你的作业也借我抄抄。", img: "10.jpg" },
+    { type: "ESFP", name: "黎月鱼", game: "第零封情书", desc: "你会被她热情主动的鲜活感吸引。她表现欲强，喜欢被关注，也毫不掩饰自己的喜欢，和她在一起永远充满新鲜感。她乐于被带领，也会用热烈的方式回应你的付出，对习惯了平淡、渴望被热烈爱着的人来说，她的直白与鲜活格外动人。她的眼皮好像有把人吸进去的魔力，好想掐。", img: "11.jpg" },
+    { type: "ESTP", name: "陆见深", game: "第零封情书", desc: "你会被他灵活善变的魅力吸引。他察言观色的能力极强，总能精准拿捏你的喜好，情话与套路信手拈来，带着危险又迷人的气息。他的喜欢充满推拉与刺激，对厌倦了平淡、追求新鲜感的人来说，他的神秘与多变，有着让人沦陷的魔力。所以，上明水天台风干吧。", img: "12.jpg" },
+    { type: "ESFJ", name: "吴常", game: "第零封情书", desc: "你会被他热情话多的活力吸引。他自来熟、爱分享，总能用叽叽喳喳的日常填满你的生活，让你不再孤单。他的关心直白又热烈，会主动帮你融入集体，对内向社恐、害怕被忽略的人来说，他的热情就是最温暖的陪伴。情书钦定好男人。", img: "13.jpg" },
+    { type: "ISFP", name: "郝梦", game: "第零封情书", desc: "你会被她沉默却长情的温柔吸引。她话少内敛，不善表达，却会把所有的关心藏在行动里，默默守护在意的人。她的喜欢安静又坚定，从不会说漂亮话，却会在细节里让你感受到被爱，对渴望细水长流的感情来说，她的沉默与长情格外戳人。源文件…还会再见吗。", img: "14.jpg" },
+    { type: "ISTJ", name: "林屿鹿", game: "第零封情书", desc: "你会被他严谨可靠的踏实感吸引。她守规矩、重责任，做事按部就班，从不会给你画大饼，所有的关心都藏在 “说到做到” 的细节里。她的世界稳定又有序，能给你满满的安全感，对害怕变数、渴望安稳的人来说，她的靠谱就是最安心的存在。千万别去带弹唱的酒馆！！", img: "15.jpg" },
+    { type: "ENTJ", name: "王川", game: "第零封情书", desc: "你会被他强势果断的掌控力吸引。他目标明确、执行力极强，天生带着领袖气场，能在你迷茫时为你指明方向。他的喜欢带着 “势在必得” 的坚定，会用行动为你扫清障碍，对习惯了被动、需要被带领的人来说，他的果断与担当就是最可靠的依靠。相视无言，我知道你选择了电脑，寄吧王川。", img: "16.jpg" }
+];
 
-    // 题目
-    const questions = [
-        { q: "你发现许堇悠和许樱叶的言行出现矛盾，你会：", a: ["主动调和矛盾", "默默观察判断", "跟随热情的一方", "直觉怀疑双方"] },
-        { q: "面对天台带着美工刀的许樱叶，你会：", a: ["礼貌关心状态", "分析行为动机", "避开危险", "探究秘密"] },
-        { q: "许堇悠拉你参加热闹聚会，你会：", a: ["开心答应", "犹豫观察", "享受当下", "只想独处"] },
-        { q: "苑薇吐槽被忽略，你会：", a: ["安慰情绪", "分析解决", "陪她吐槽", "保持警惕"] },
-        { q: "吴正强行安排你的行程，你会：", a: ["委婉不满", "直接反驳", "表面应付", "疏远他"] },
-        { q: "N学姐给你出逻辑题，你会：", a: ["礼貌回应", "拆解漏洞", "随便应付", "思考意图"] },
-        { q: "言梦绫默默帮你，你会：", a: ["主动道谢", "判断态度", "记住回报", "想了解她"] },
-        { q: "你同时被许堇悠和许樱叶吸引，你会：", a: ["不想伤人", "理性选择", "凭感觉", "观望"] },
-        { q: "许堇悠忽冷忽热，你会：", a: ["主动沟通", "找原因", "以冷制冷", "调整自己"] },
-        { q: "许樱叶拒绝交流，你会：", a: ["持续关心", "尊重边界", "不再主动", "坚持靠近"] },
-        { q: "苑薇组织集体活动，你会：", a: ["积极配合", "先问清楚", "欣然参加", "婉拒"] },
-        { q: "吴正当众否定你，你会：", a: ["私下沟通", "据理力争", "避免冲突", "疏远他"] },
-        { q: "N学姐分享小众研究，你会：", a: ["认真倾听", "深入探讨", "礼貌应付", "仔细琢磨"] },
-        { q: "言梦绫被误会，你会：", a: ["帮她澄清", "客观分析", "默默支持", "观察真相"] },
-        { q: "你在天台发现许樱叶的秘密物品，你会：", a: ["尊重隐私", "分析用途", "赶紧离开", "忍不住探究"] },
-        { q: "许堇悠邀你逃课，你会：", a: ["陪她一起", "拒绝后果", "觉得刺激", "婉拒观察"] },
-        { q: "苑薇和朋友吵架，你会：", a: ["共情安慰", "给建议", "转移注意", "梳理原因"] },
-        { q: "吴正的任务和你冲突，你会：", a: ["先配合", "提方案", "按自己来", "考虑退出"] },
-        { q: "N学姐对你冷淡，你会：", a: ["主动关心", "找逻辑原因", "不打扰", "调整言行"] },
-        { q: "言梦绫生病，你会：", a: ["照顾她", "给护理建议", "陪伴聊天", "默默关注"] },
-        { q: "第一次和季宣瑶对视，你会：", a: ["微笑打招呼", "保持距离", "害羞移开", "多看几眼"] },
-        { q: "王嘉豪拉你和季宣瑶玩闹，你会：", a: ["帮她融入", "找借口离开", "一起玩", "观察她"] },
-        { q: "顾颉帮你解题，你会：", a: ["关心他", "学方法", "请他喝东西", "想了解他"] },
-        { q: "程冉惠组织活动邀你和季宣瑶，你会：", a: ["帮她准备", "先问流程", "开心参加", "立刻答应"] },
-        { q: "季宣瑶递水给你，你会：", a: ["温柔搭话", "保持距离", "笑着接过", "慢慢靠近"] },
-        { q: "王嘉豪和同学吵架，你会：", a: ["劝和", "客观分析", "拉走他", "梳理误会"] },
-        { q: "顾颉在看书，你会：", a: ["轻声打招呼", "不打扰", "好奇凑看", "想交流"] },
-        { q: "程冉惠关心你的学习，你会：", a: ["真诚交流", "探讨方法", "随便应付", "倾诉烦恼"] },
-        { q: "你想约季宣瑶学习，你会：", a: ["主动邀约", "选合适时间", "紧张直接问", "提前规划"] },
-        { q: "王嘉豪拉你去派对，你会：", a: ["陪他去", "拒绝浪费时间", "期待氛围", "婉拒"] },
-        { q: "顾颉被误会，你会：", a: ["帮澄清", "理事实", "默默支持", "找证据"] },
-        { q: "程冉惠带病组织活动，你会：", a: ["替她分担", "劝她休息", "帮忙做事", "想帮减负"] },
-        { q: "季宣瑶被提问紧张，你会：", a: ["悄悄提示", "默默等", "替她着急", "课后安慰"] },
-        { q: "王嘉豪考差低落，你会：", a: ["陪伴安慰", "帮分析", "带他散心", "鼓励他"] },
-        { q: "顾颉帮你修文具，你会：", a: ["关心他", "学技巧", "送小礼物", "想交朋友"] },
-        { q: "你主动找黎月鱼却被冷淡，你会：", a: ["不气馁", "找原因", "有点受挫", "相信能打动"] },
-        { q: "陆见深对你过分热情暧昧，你会：", a: ["礼貌回应", "保持警惕", "有点心动", "刻意疏远"] },
-        { q: "吴常和你分享日常，你会：", a: ["认真倾听", "一起探讨", "跟着笑", "愿意多聊"] },
-        { q: "郝梦默默帮你却不说，你会：", a: ["主动道谢", "复盘过程", "记住回报", "想深交"] },
-        { q: "黎月鱼突然对你热情，你会：", a: ["开心互动", "理性分析", "立刻热络", "保持真诚"] },
-        { q: "陆见深给你写情书，你会：", a: ["礼貌回应", "判断真心", "有点感动", "觉得套路"] },
-        { q: "吴常邀你聚会，你会：", a: ["答应帮忙", "先问清楚", "期待热闹", "婉拒"] },
-        { q: "郝梦被误会不辩解，你会：", a: ["帮澄清", "客观梳理", "陪伴安慰", "默默观察"] },
-        { q: "黎月鱼邀你参加她喜欢的活动，你会：", a: ["开心做功课", "先了解", "期待体验", "认真对待"] },
-        { q: "陆见深和你玩推拉，你会：", a: ["不想陷进去", "保持清醒", "享受过程", "戳穿他"] },
-        { q: "吴常和朋友闹矛盾，你会：", a: ["共情安慰", "给建议", "转移注意", "梳理原因"] },
-        { q: "郝梦生病，你会：", a: ["照顾他", "给建议", "陪伴聊天", "默默关注"] },
-        { q: "黎月鱼闹小脾气，你会：", a: ["哄她", "理性解决", "陪她发泄", "用她喜欢的方式"] },
-        { q: "陆见深说别人坏话，你会：", a: ["礼貌附和", "判断真假", "反感离开", "保持距离"] },
-        { q: "郝梦被表白不知如何回应，你会：", a: ["帮分析", "客观梳理", "陪他纠结", "帮他感受"] },
-        { q: "可能下雨，你会带伞吗？", a: ["带，以防万一", "带，帮别人", "不带，赌一把", "不带，下雨再买"] },
-        { q: "上班快迟到了，你会：", a: ["慢慢来，自由最重要", "打车，必须准时", "干脆回家睡觉", "住公司"] },
-        { q: "遇到难缠顾客，你会：", a: ["温和继续", "讲道理将心比心", "不耐烦但解释", "发现是陆见深伪装"] },
-        { q: "午休你通常：", a: ["睡觉", "工作", "优先完成工作", "从不午休"] },
-        { q: "快下班来新任务，你会：", a: ["能做多少做多少", "立刻加班", "假装没看见", "必须加班"] },
-        { q: "下班第一时间想：", a: ["想明天工作", "先吃饭", "有没有人想我", "回家躺平"] },
-        { q: "路上被邀请去酒吧，你会：", a: ["觉得是骗子", "询问情况", "严词拒绝", "还要加班"] },
-        { q: "第一次约会选：", a: ["咖啡厅", "鬼屋", "酒吧", "学校天台"] },
-        { q: "女友突然离开，你会：", a: ["觉得她无理取闹", "反思自己", "双方都有错", "想配一台好电脑"] },
-        { q: "你觉得谁最适合恋爱：", a: ["鱼鱼", "小黎", "于于", "电脑"] }
-    ];
+const questions = [
+    { q: "你发现许堇悠和许樱叶的言行出现矛盾，你会：", a: ["主动调和矛盾","默默观察判断","跟随热情的一方","直觉怀疑双方"] },
+    { q: "面对天台带着美工刀的许樱叶，你会：", a: ["礼貌关心状态","分析行为动机","避开危险","探究秘密"] },
+    { q: "许堇悠拉你参加热闹聚会，你会：", a: ["开心答应","犹豫观察","享受当下","只想独处"] },
+    { q: "苑薇吐槽被忽略，你会：", a: ["安慰情绪","分析解决","陪她吐槽","保持警惕"] },
+    { q: "吴正强行安排你的行程，你会：", a: ["委婉不满","直接反驳","表面应付","疏远他"] },
+    { q: "N学姐给你出逻辑题，你会：", a: ["礼貌回应","拆解漏洞","随便应付","思考意图"] },
+    { q: "言梦绫默默帮你，你会：", a: ["主动道谢","判断态度","记住回报","想了解她"] },
+    { q: "你同时被许堇悠和许樱叶吸引，你会：", a: ["不想伤人","理性选择","凭感觉","观望"] },
+    { q: "许堇悠忽冷忽热，你会：", a: ["主动沟通","找原因","以冷制冷","调整自己"] },
+    { q: "许樱叶拒绝交流，你会：", a: ["持续关心","尊重边界","不再主动","坚持靠近"] },
+    { q: "苑薇组织集体活动，你会：", a: ["积极配合","先问清楚","欣然参加","婉拒"] },
+    { q: "吴正当众否定你，你会：", a: ["私下沟通","据理力争","避免冲突","疏远他"] },
+    { q: "N学姐分享小众研究，你会：", a: ["认真倾听","深入探讨","礼貌应付","仔细琢磨"] },
+    { q: "言梦绫被误会，你会：", a: ["帮她澄清","客观分析","默默支持","观察真相"] },
+    { q: "你在天台发现许樱叶的秘密物品，你会：", a: ["尊重隐私","分析用途","赶紧离开","忍不住探究"] },
+    { q: "许堇悠邀你逃课，你会：", a: ["陪她一起","拒绝后果","觉得刺激","婉拒观察"] },
+    { q: "苑薇和朋友吵架，你会：", a: ["共情安慰","给建议","转移注意","梳理原因"] },
+    { q: "吴正的任务和你冲突，你会：", a: ["先配合","提方案","按自己来","考虑退出"] },
+    { q: "N学姐对你冷淡，你会：", a: ["主动关心","找逻辑原因","不打扰","调整言行"] },
+    { q: "言梦绫生病，你会：", a: ["照顾她","给护理建议","陪伴聊天","默默关注"] },
+    { q: "第一次和季宣瑶对视，你会：", a: ["微笑打招呼","保持距离","害羞移开","多看几眼"] },
+    { q: "王嘉豪拉你和季宣瑶玩闹，你会：", a: ["帮她融入","找借口离开","一起玩","观察她"] },
+    { q: "顾颉帮你解题，你会：", a: ["关心他","学方法","请他喝东西","想了解他"] },
+    { q: "程冉惠组织活动邀你和季宣瑶，你会：", a: ["帮她准备","先问流程","开心参加","立刻答应"] },
+    { q: "季宣瑶递水给你，你会：", a: ["温柔搭话","保持距离","笑着接过","慢慢靠近"] },
+    { q: "王嘉豪和同学吵架，你会：", a: ["劝和","客观分析","拉走他","梳理误会"] },
+    { q: "顾颉在看书，你会：", a: ["轻声打招呼","不打扰","好奇凑看","想交流"] },
+    { q: "程冉惠关心你的学习，你会：", a: ["真诚交流","探讨方法","随便应付","倾诉烦恼"] },
+    { q: "你想约季宣瑶学习，你会：", a: ["主动邀约","选合适时间","紧张直接问","提前规划"] },
+    { q: "王嘉豪拉你去派对，你会：", a: ["陪他去","拒绝浪费时间","期待氛围","婉拒"] },
+    { q: "顾颉被误会，你会：", a: ["帮澄清","理事实","默默支持","找证据"] },
+    { q: "程冉惠带病组织活动，你会：", a: ["替她分担","劝她休息","帮忙做事","想帮减负"] },
+    { q: "季宣瑶被提问紧张，你会：", a: ["悄悄提示","默默等","替她着急","课后安慰"] },
+    { q: "王嘉豪考差低落，你会：", a: ["陪伴安慰","帮分析","带他散心","鼓励他"] },
+    { q: "顾颉帮你修文具，你会：", a: ["关心他","学方法","送小礼物","想交朋友"] },
+    { q: "你主动找黎月鱼却被冷淡，你会：", a: ["不气馁","找原因","有点受挫","相信能打动"] },
+    { q: "陆见深对你过分热情暧昧，你会：", a: ["礼貌回应","保持警惕","有点心动","刻意疏远"] },
+    { q: "吴常和你分享日常，你会：", a: ["认真倾听","一起探讨","跟着笑","愿意多聊"] },
+    { q: "郝梦默默帮你却不说，你会：", a: ["主动道谢","复盘过程","记住回报","想深交"] },
+    { q: "黎月鱼突然对你热情，你会：", a: ["开心互动","理性分析","立刻热络","保持真诚"] },
+    { q: "陆见深给你写情书，你会：", a: ["礼貌回应","判断真心","有点感动","觉得套路"] },
+    { q: "吴常邀你聚会，你会：", a: ["答应帮忙","先问清楚","期待热闹","婉拒"] },
+    { q: "郝梦被误会不辩解，你会：", a: ["帮澄清","客观梳理","陪伴安慰","默默观察"] },
+    { q: "黎月鱼邀你参加她喜欢的活动，你会：", a: ["开心做功课","先了解","期待体验","认真对待"] },
+    { q: "陆见深和你玩推拉，你会：", a: ["不想陷进去","保持清醒","享受过程","戳穿他"] },
+    { q: "吴常和朋友闹矛盾，你会：", a: ["共情安慰","给建议","转移注意","梳理原因"] },
+    { q: "郝梦生病，你会：", a: ["照顾他","给建议","陪伴聊天","默默关注"] },
+    { q: "黎月鱼闹小脾气，你会：", a: ["哄她","理性解决","陪她发泄","用她喜欢的方式"] },
+    { q: "陆见深说别人坏话，你会：", a: ["礼貌附和","判断真假","反感离开","保持距离"] },
+    { q: "郝梦被表白不知如何回应，你会：", a: ["帮分析","客观梳理","陪他纠结","帮他感受"] },
+    { q: "可能下雨，你会带伞吗？", a: ["带，以防万一","带，帮别人","不带，赌一把","不带，下雨再买"] },
+    { q: "上班快迟到了，你会：", a: ["慢慢来，自由最重要","打车，必须准时","干脆回家睡觉","住公司"] },
+    { q: "遇到难缠顾客，你会：", a: ["温和继续","讲道理将心比心","不耐烦但解释","发现是陆见深伪装"] },
+    { q: "午休你通常：", a: ["睡觉","工作","优先完成工作","从不午休"] },
+    { q: "快下班来新任务，你会：", a: ["能做多少做多少","立刻加班","假装没看见","必须加班"] },
+    { q: "下班第一时间想：", a: ["想明天工作","先吃饭","有没有人想我","回家躺平"] },
+    { q: "路上被邀请去酒吧，你会：", a: ["觉得是骗子","询问情况","严词拒绝","还要加班"] },
+    { q: "第一次约会选：", a: ["咖啡厅","鬼屋","酒吧","学校天台"] },
+    { q: "女友突然离开，你会：", a: ["觉得她无理取闹","反思自己","双方都有错","想配一台好电脑"] },
+    { q: "你觉得谁最适合恋爱：", a: ["鱼鱼","小黎","于于","电脑"] }
+];
 
-    // 全局变量
-    let currentQ = 0;
-    let answers = Array(60).fill(null);
-    let dCount = 0;
+let currentQ = 0;
+let answers = Array(60).fill(null);
+let dCount = 0;
 
-    // 自动切换背景图
-    function updateBackground() {
-        document.body.classList.remove('bg-1', 'bg-2', 'bg-3');
-        if (currentQ >= 0 && currentQ <= 15) {
-            document.body.classList.add('bg-1');
-        } else if (currentQ >= 16 && currentQ <= 34) {
-            document.body.classList.add('bg-2');
-        } else if (currentQ >= 35 && currentQ <= 59) {
-            document.body.classList.add('bg-3');
-        }
-    }
+const gameInfo = {
+    "致命终局": { link: "https://store.steampowered.com/app/3104230/_Deadly_Endgame/", img: "game_deadly_endgame.jpg" },
+    "初遇时": { link: "https://store.steampowered.com/app/3772010/_/", img: "game_first_love.jpg" },
+    "第零封情书": { link: "https://store.steampowered.com/app/4000980/_/", img: "game_zero_letter.jpg" }
+};
 
-    // 初始化图鉴
-    function initGrid() {
-        const grid = document.getElementById('charGrid');
-        grid.innerHTML = '';
-        characters.forEach((c, i) => {
-            const card = document.createElement('div');
-            card.className = 'bg-white p-4 rounded-xl shadow text-center cursor-pointer hover:-translate-y-1 transition-transform';
-            card.innerHTML = `
-                <img src="${c.img}" class="w-24 h-24 rounded-full object-cover mx-auto mb-3">
-                <p class="font-bold">${c.name}</p>
-                <p class="text-xs text-gray-500">${c.game}</p>
-            `;
-            card.onclick = () => openModal(i);
-            grid.appendChild(card);
+function updateBackground() {
+    document.body.classList.remove('bg-1','bg-2','bg-3');
+    if (currentQ >= 0 && currentQ <= 15) document.body.classList.add('bg-1');
+    else if (currentQ >= 16 && currentQ <= 34) document.body.classList.add('bg-2');
+    else if (currentQ >= 35 && currentQ <= 59) document.body.classList.add('bg-3');
+}
+
+function initGrid() {
+    const g = document.getElementById('charGrid');
+    g.innerHTML = '';
+    characters.forEach((c,i)=>{
+        let d = document.createElement('div');
+        d.className = 'bg-white p-4 rounded-xl shadow text-center cursor-pointer hover:-translate-y-1 transition-transform';
+        d.innerHTML = `<img src="${c.img}" class="w-24 h-24 rounded-full object-cover mx-auto mb-3"><p class="font-bold">${c.name}</p><p class="text-xs text-gray-500">${c.game}</p>`;
+        d.onclick = ()=>openModal(i);
+        g.appendChild(d);
+    });
+}
+
+function openModal(i){
+    const c = characters[i];
+    document.getElementById('modalImg').src = c.img;
+    document.getElementById('modalName').textContent = c.name;
+    document.getElementById('modalGame').textContent = c.game+' · '+c.type;
+    document.getElementById('modalDesc').textContent = c.desc;
+    document.getElementById('charModal').classList.add('show');
+}
+
+function closeModal(){
+    document.getElementById('charModal').classList.remove('show');
+}
+
+function showAll(id){
+    document.getElementById('startPage').classList.add('hidden');
+    document.getElementById('bookPage').classList.add('hidden');
+    document.getElementById('testPage').classList.add('hidden');
+    document.getElementById('resultPage').classList.add('hidden');
+    document.getElementById(id).classList.remove('hidden');
+    if(id!='testPage') document.body.classList.remove('bg-1','bg-2','bg-3');
+}
+
+function backToStart(){
+    currentQ = 0; answers.fill(null); dCount = 0;
+    document.body.classList.remove('bg-1','bg-2','bg-3');
+    showAll('startPage');
+}
+
+function showBook(){ initGrid(); showAll('bookPage'); }
+function startTest(){ currentQ=0; answers.fill(null); dCount=0; renderQuestion(); updateBackground(); showAll('testPage'); }
+
+function renderQuestion(){
+    const q = questions[currentQ];
+    const card = document.getElementById('questionCard');
+    card.classList.remove('slide-active');
+    setTimeout(()=>{
+        document.getElementById('questionTitle').textContent = q.q;
+        document.getElementById('qBgNum').textContent = String(currentQ+1).padStart(2,'0');
+        document.getElementById('progressText').textContent = `${currentQ+1}/60`;
+        document.getElementById('progressBar').style.width = ((currentQ+1)/60*100)+'%';
+        const opt = document.getElementById('options');
+        opt.innerHTML = '';
+        ['A','B','C','D'].forEach((k,i)=>{
+            let b = document.createElement('button');
+            b.className = 'option-btn w-full p-4 border rounded-xl text-left hover:bg-orange-50 transition-colors';
+            b.textContent = k+' · '+q.a[i];
+            b.onclick = ()=>selectAnswer(k,b);
+            if(answers[currentQ]===k) b.classList.add('selected');
+            opt.appendChild(b);
         });
-    }
+        card.classList.add('slide-active');
+    },100);
+}
 
-    // 弹窗
-    function openModal(i) {
-        const c = characters[i];
-        document.getElementById('modalImg').src = c.img;
-        document.getElementById('modalName').textContent = c.name;
-        document.getElementById('modalGame').textContent = c.game + ' · ' + c.type;
-        document.getElementById('modalDesc').textContent = c.desc;
-        document.getElementById('charModal').classList.add('show');
-    }
+function selectAnswer(k,btnEl){
+    document.querySelectorAll('.option-btn').forEach(b=>b.classList.remove('selected'));
+    btnEl.classList.add('selected');
+    answers[currentQ] = k;
+    if(currentQ>=51 && k==='D') dCount++;
+    setTimeout(()=>{
+        if(currentQ>=59) showResult();
+        else nextQuestion();
+    },300);
+}
 
-    function closeModal() {
-        document.getElementById('charModal').classList.remove('show');
-    }
+function nextQuestion(){
+    if(answers[currentQ]===null){ alert('请先选择一个选项'); return; }
+    currentQ++; updateBackground(); renderQuestion();
+}
 
-    // 页面切换
-    function showAll(id) {
-        document.getElementById('startPage').classList.add('hidden');
-        document.getElementById('bookPage').classList.add('hidden');
-        document.getElementById('testPage').classList.add('hidden');
-        document.getElementById('resultPage').classList.add('hidden');
-        document.getElementById(id).classList.remove('hidden');
-        
-        if(id !== 'testPage') {
-            document.body.classList.remove('bg-1','bg-2','bg-3');
-        }
-    }
+function prevQuestion(){
+    if(currentQ<=0) return;
+    currentQ--; updateBackground(); renderQuestion();
+}
 
-    function backToStart() {
-        currentQ = 0;
-        answers.fill(null);
-        dCount = 0;
-        document.body.classList.remove('bg-1','bg-2','bg-3');
-        showAll('startPage');
-    }
-
-    function showBook() {
-        initGrid();
-        showAll('bookPage');
-    }
-
-    // 答题
-    function startTest() {
-        currentQ = 0;
-        answers.fill(null);
-        dCount = 0;
-        renderQuestion();
-        updateBackground();
-        showAll('testPage');
-    }
-
-    function renderQuestion() {
-        const q = questions[currentQ];
-        const card = document.getElementById('questionCard');
-        card.classList.remove('slide-active');
-
-        setTimeout(() => {
-            document.getElementById('questionTitle').textContent = q.q;
-            document.getElementById('qBgNum').textContent = String(currentQ + 1).padStart(2, '0');
-            document.getElementById('progressText').textContent = `${currentQ + 1}/60`;
-            document.getElementById('progressBar').style.width = ((currentQ + 1) / 60 * 100) + '%';
-
-            const optBox = document.getElementById('options');
-            optBox.innerHTML = '';
-            ['A', 'B', 'C', 'D'].forEach((k, i) => {
-                const btn = document.createElement('button');
-                btn.className = 'option-btn w-full p-4 border rounded-xl text-left hover:bg-orange-50 transition-colors';
-                btn.textContent = k + ' · ' + q.a[i];
-                btn.onclick = () => selectAnswer(k, btn);
-                if (answers[currentQ] === k) {
-                    btn.classList.add('selected');
-                }
-                optBox.appendChild(btn);
-            });
-
-            card.classList.add('slide-active');
-        }, 100);
-    }
-
-    function selectAnswer(k, btnEl) {
-        document.querySelectorAll('.option-btn').forEach(btn => btn.classList.remove('selected'));
-        btnEl.classList.add('selected');
-        answers[currentQ] = k;
-        if (currentQ >= 51 && k === 'D') dCount++;
-        setTimeout(() => {
-            if (currentQ >= 59) {
-                showResult();
-            } else {
-                nextQuestion();
-            }
-        }, 300);
-    }
-
-    function nextQuestion() {
-        if (answers[currentQ] === null) {
-            alert('请先选择一个选项');
-            return;
-        }
-        currentQ++;
-        updateBackground();
-        if (currentQ >= 60) {
-            showResult();
-        } else {
-            renderQuestion();
-        }
-    }
-
-    function prevQuestion() {
-        if (currentQ <= 0) return;
-        currentQ--;
-        updateBackground();
-        renderQuestion();
-    }
-
-    // 结果
-    function showResult() {
-        let target;
-        // 这里保留了你 ≥6 个D 才出王川的规则
-        if (dCount >= 6) {
-            target = characters.find(c => c.name === '王川');
-        } else {
-            target = characters[Math.floor(Math.random() * characters.length)];
-        }
-
-        document.getElementById('resultAvatar').src = target.img;
-        document.getElementById('resultName').textContent = target.name + ' · ' + target.type;
-        document.getElementById('resultIntro').textContent = target.desc;
-        document.getElementById('resultTip').textContent = target.game + ' · 维度接近平衡时已取略偏方向';
-
-        const ei = Math.random() * 100;
-        const sn = Math.random() * 100;
-        const tf = Math.random() * 100;
-        const jp = Math.random() * 100;
-
-        document.getElementById('eiBar').style.width = ei + '%';
-        document.getElementById('snBar').style.width = sn + '%';
-        document.getElementById('tfBar').style.width = tf + '%';
-        document.getElementById('jpBar').style.width = jp + '%';
-
-        showAll('resultPage');
-    }
+function showResult(){
+    let t = dCount>=6 ? characters.find(c=>c.name==='王川') : characters[Math.floor(Math.random()*characters.length)];
+    document.getElementById('resultAvatar').src = t.img;
+    document.getElementById('resultName').textContent = t.name+' · '+t.type;
+    document.getElementById('resultIntro').textContent = t.desc;
+    document.getElementById('resultTip').textContent = t.game+' · 维度接近平衡时已取略偏方向';
+    const g = gameInfo[t.game];
+    document.getElementById('resultGameTitle').textContent = t.game;
+    document.getElementById('resultGameImg').src = g.img;
+    document.getElementById('resultGameLink').href = g.link;
+    document.getElementById('eiBar').style.width = Math.random()*100+'%';
+    document.getElementById('snBar').style.width = Math.random()*100+'%';
+    document.getElementById('tfBar').style.width = Math.random()*100+'%';
+    document.getElementById('jpBar').style.width = Math.random()*100+'%';
+    showAll('resultPage');
+}
 </script>
 </body>
 </html>
